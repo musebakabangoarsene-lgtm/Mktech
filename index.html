@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>ISTM M'SIRI 1ER - Accueil</title>
+
+<style>
+
+/* RESET */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* BODY */
+body {
+  font-family: 'Segoe UI', Tahoma, sans-serif;
+  background: #f4f6f9;
+  color: #333;
+  margin-top: 120px;
+}
+
+/* HEADER */
+header {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  height: 80px;
+  background: url('bun.jpg') no-repeat center;
+  background-size: cover;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+  z-index: 1000;
+}
+
+/* TITRE DÉFILANT PROPRE */
+.marquee {
+  white-space: nowrap;
+  overflow: hidden;
+  width: 100%;
+}
+
+.marquee h1 {
+  display: inline-block;
+  padding-left: 100%;
+  animation: defile 15s linear infinite;
+  font-size: 22px;
+}
+
+@keyframes defile {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-100%); }
+}
+
+.slogan {
+  font-style: italic;
+  font-size: 14px;
+}
+
+/* NAV PLUS COMPACT */
+nav {
+  position: fixed;
+  top: 80px;
+  width: 100%;
+  background: darkred;
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  padding: 6px;
+  z-index: 999;
+}
+
+nav a {
+  color: white;
+  text-decoration: none;
+  font-weight: bold;
+  padding: 6px 12px;
+  border-radius: 5px;
+  font-size: 14px;
+  transition: 0.3s;
+}
+
+nav a:hover {
+  background: black;
+}
+
+/* SLIDER */
+.slider {
+  position: relative;
+  height: 300px;
+  overflow: hidden;
+  margin-top: 10px;
+}
+
+.slide {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  transition: opacity 1s ease-in-out;
+}
+
+.slide.active {
+  opacity: 1;
+}
+
+/* SECTIONS */
+section {
+  max-width: 1000px;
+  margin: 25px auto;
+  padding: 20px;
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+}
+
+/* TITRES */
+h2 {
+  color: #003366;
+  margin-bottom: 15px;
+}
+
+/* FEATURES */
+.features {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 10px;
+}
+
+.feature-box {
+  background: #eef3f9;
+  padding: 12px;
+  border-radius: 8px;
+  text-align: center;
+}
+
+/* BOUTON */
+.btn {
+  display: inline-block;
+  margin-top: 15px;
+  padding: 8px 15px;
+  background: #003366;
+  color: white;
+  border-radius: 5px;
+  text-decoration: none;
+}
+
+.btn:hover {
+  background: #0059b3;
+}
+
+/* FOOTER */
+footer {
+  text-align: center;
+  background: black;
+  color: white;
+  padding: 15px;
+  margin-top: 20px;
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+  body {
+    margin-top: 140px;
+  }
+
+  .slider {
+    height: 200px;
+  }
+
+  .marquee h1 {
+    font-size: 16px;
+  }
+}
+
+</style>
+</head>
+
+<body>
+
+<header>
+  <div class="marquee">
+    <h1>INSTITUT SUPERIEUR DES TECHNIQUES MÉDICALES M'SIRI 1er</h1>
+  </div>
+  <p class="slogan">Sanitas - Scientia - Conscientia</p>
+</header>
+
+<nav>
+  <a href="contact.html">MENU</a>
+</nav>
+
+<!-- SLIDER -->
+<div class="slider">
+  <img src="image2.jpg" class="slide active">
+  <img src="image3.jpg" class="slide">
+  <img src="imagine7.jpg" class="slide">
+  <img src="image8.jpg" class="slide">
+  <img src="image4.jpg" class="slide">
+</div>
+
+<!-- PRESENTATION -->
+<section>
+  <h2>Notre Mission</h2>
+  <p>Former des professionnels de santé compétents pour la RDC.</p>
+</section>
+
+<!-- FILIERES -->
+<section>
+  <h2>Nos Filières</h2>
+  <ul>
+    <li>Sage-femme</li>
+    <li>Techniques de Laboratoire</li>
+    <li>Pédiatrie</li>
+  </ul>
+  <a href="filières.html" class="btn">Voir toutes les filières</a>
+</section>
+
+<!-- AVANTAGES -->
+<section>
+  <h2>Pourquoi choisir ISTM M'SIRI ?</h2>
+
+  <div class="features">
+    <div class="feature-box">🎓 Formation de qualité</div>
+    <div class="feature-box">🏥 Encadrement professionnel</div>
+    <div class="feature-box">📚 Programmes adaptés</div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p>R.D CONGO / LUALABA / BUNKEYA</p>
+  <p>Av. Mont NKULU</p>
+</footer>
+
+<script>
+let slides = document.querySelectorAll('.slide');
+let index = 0;
+
+setInterval(() => {
+  slides[index].classList.remove('active');
+  index = (index + 1) % slides.length;
+  slides[index].classList.add('active');
+}, 4000);
+</script>
+
+</body>
+</html>
