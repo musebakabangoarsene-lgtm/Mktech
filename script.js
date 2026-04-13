@@ -1,45 +1,86 @@
+// =======================
+// 🔵 FORMULAIRE INSCRIPTION
+// =======================
+
 // Sélection
 let form = document.getElementById("form");
 let ancien = document.getElementById("ancien");
 let codeBox = document.getElementById("codeBox");
 let codeInput = document.getElementById("code");
 
-// 🔥 cacher au départ
-codeBox.style.display = "none";
+// cacher au départ
+if (codeBox) {
+  codeBox.style.display = "none";
+}
 
 // afficher si coché
-ancien.addEventListener("change", function() {
-  if (this.checked) {
-    codeBox.style.display = "block";
-    codeInput.required = true;
-  } else {
-    codeBox.style.display = "none";
-    codeInput.required = false;
-  }
-});
+if (ancien) {
+  ancien.addEventListener("change", function() {
+    if (this.checked) {
+      codeBox.style.display = "block";
+      codeInput.required = true;
+    } else {
+      codeBox.style.display = "none";
+      codeInput.required = false;
+    }
+  });
+}
 
-// ENVOI WHATSAPP
-form.addEventListener("submit", function(e) {
-  e.preventDefault();
+// =======================
+// 🔵 ENVOI WHATSAPP + SAVE
+// =======================
 
-  let nom = document.getElementById("nom").value;
-  let postnom = document.getElementById("postnom").value;
-  let prenom = document.getElementById("prenom").value;
-  let sexe = document.getElementById("sexe").value;
-  let date = document.getElementById("date").value;
-  let lieu = document.getElementById("lieu").value;
-  let ancienVal = ancien.checked ? "Oui" : "Non";
-  let code = codeInput.value;
-  let classe = document.getElementById("classe").value;
-  let quartier = document.getElementById("quartier").value;
-  let ecole = document.getElementById("ecole").value;
-  let option = document.getElementById("option").value;
-  let pourcentage = document.getElementById("pourcentage").value;
-  let filiere = document.getElementById("filiere").value;
-  let tuteur = document.getElementById("tuteur").value;
-  let numtuteur = document.getElementById("numtuteur").value;
+if (form) {
+  form.addEventListener("submit", function(e) {
+    e.preventDefault();
 
-  let message =
+    let nom = document.getElementById("nom").value;
+    let postnom = document.getElementById("postnom").value;
+    let prenom = document.getElementById("prenom").value;
+    let sexe = document.getElementById("sexe").value;
+    let date = document.getElementById("date").value;
+    let lieu = document.getElementById("lieu").value;
+    let ancienVal = ancien.checked ? "Oui" : "Non";
+    let code = codeInput.value;
+    let classe = document.getElementById("classe").value;
+    let quartier = document.getElementById("quartier").value;
+    let ecole = document.getElementById("ecole").value;
+    let option = document.getElementById("option").value;
+    let pourcentage = document.getElementById("pourcentage").value;
+    let filiere = document.getElementById("filiere").value;
+    let tuteur = document.getElementById("tuteur").value;
+    let numtuteur = document.getElementById("numtuteur").value;
+
+    // =======================
+    // 🔵 SAUVEGARDE LOCAL STORAGE
+    // =======================
+    let inscriptions = JSON.parse(localStorage.getItem("inscriptions")) || [];
+
+    inscriptions.push({
+      nom,
+      postnom,
+      prenom,
+      sexe,
+      date,
+      lieu,
+      ancien: ancienVal,
+      code,
+      classe,
+      quartier,
+      ecole,
+      option,
+      pourcentage,
+      filiere,
+      tuteur,
+      numtuteur
+    });
+
+    localStorage.setItem("inscriptions", JSON.stringify(inscriptions));
+
+    // =======================
+    // 🔵 MESSAGE WHATSAPP
+    // =======================
+    let message =
 `INSCRIPTION ISTM M'SIRI 1er
 
 Nom: ${nom}
@@ -63,34 +104,93 @@ Filière: ${filiere}
 Tuteur: ${tuteur}
 Numéro: ${numtuteur}`;
 
-  let numero = "243XXXXXXXXX"; // 🔥 remplace par ton numéro
+    let numero = "243976786849";
 
-  let url = "https://wa.me/" + numero + "?text=" + encodeURIComponent(message);
+    let url = "https://wa.me/" + numero + "?text=" + encodeURIComponent(message);
 
-  window.open(url, "_blank");
-});
-function login(){
+    let confirmation = confirm("Envoyer l'inscription sur WhatsApp ?");
+
+    if (confirmation) {
+      window.open(url, "_blank");
+      form.reset();
+      codeBox.style.display = "none";
+    }
+  });
+}
+
+// =======================
+// 🔵 ADMIN PANEL
+// =======================
+
+function loadUsers() {
+  let inscriptions = JSON.parse(localStorage.getItem("inscriptions")) || [];
+
+  let table = document.getElementById("userTable");
+
+  if (!table) return;
+
+  table.innerHTML = "";
+
+  inscriptions.forEach((u, index) => {
+    table.innerHTML += `
+      <tr>
+        <td>${u.nom} ${u.postnom} ${u.prenom}</td>
+        <td>${u.filiere}</td>
+        <td>${u.classe}</td>
+        <td>${u.numtuteur}</td>
+        <td><button onclick="deleteInscription(${index})">Supprimer</button></td>
+      </tr>
+    `;
+  });
+}
+
+// supprimer inscription
+function deleteInscription(index) {
+  let inscriptions = JSON.parse(localStorage.getItem("inscriptions")) || [];
+
+  inscriptions.splice(index, 1);
+
+  localStorage.setItem("inscriptions", JSON.stringify(inscriptions));
+
+  loadUsers();
+}
+
+// charger admin
+loadUsers();
+
+// =======================
+// 🔵 LOGIN (si présent)
+// =======================
+
+function login() {
   let user = document.getElementById("user").value;
   let pass = document.getElementById("pass").value;
 
   let btnText = document.getElementById("btnText");
   let spinner = document.getElementById("spinner");
 
-  // afficher spinner
-  btnText.style.display = "none";
-  spinner.style.display = "block";
+  if (btnText && spinner) {
+    btnText.style.display = "none";
+    spinner.style.display = "block";
+  }
 
   setTimeout(() => {
-    if(user === "étudiant" && pass === "Bac123"){
+
+    if (user === "admin" && pass === "admin123") {
+      window.location.href = "admin.html";
+      return;
+    }
+
+    if (user === "étudiant" && pass === "Bac123") {
       window.location.href = "bibliothèque.html";
     } else {
       alert("Accès refusé !");
-      btnText.style.display = "block";
-      spinner.style.display = "none";
+
+      if (btnText && spinner) {
+        btnText.style.display = "block";
+        spinner.style.display = "none";
+      }
     }
-  }, 2000); // 2 secondes de chargement
-}
-if(user === "admin" && pass === "admin123"){
-  window.location.href = "admin.html";
-  return;
+
+  }, 2000);
 }
