@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>ISTM M'SIRI 1ER - Accueil</title>
+<title>ISTM</title>
 
 <style>
 
@@ -13,6 +13,18 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+}
+
+/* ANIMATION MENU ICON */
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.2); }
+    100% { transform: scale(1); }
+}
+
+.menu-icon {
+    width: 40px;
+    animation: pulse 1.5s infinite;
 }
 
 /* BODY */
@@ -39,7 +51,7 @@ header {
   z-index: 1000;
 }
 
-/* TITRE DÉFILANT PROPRE */
+/* MARQUEE */
 .marquee {
   white-space: nowrap;
   overflow: hidden;
@@ -63,7 +75,7 @@ header {
   font-size: 14px;
 }
 
-/* NAV PLUS COMPACT */
+/* NAV */
 nav {
   position: fixed;
   top: 80px;
@@ -71,26 +83,11 @@ nav {
   background: darkred;
   display: flex;
   justify-content: center;
-  gap: 10px;
   padding: 6px;
   z-index: 999;
 }
 
-nav a {
-  color: white;
-  text-decoration: none;
-  font-weight: bold;
-  padding: 6px 12px;
-  border-radius: 5px;
-  font-size: 14px;
-  transition: 0.3s;
-}
-
-nav a:hover {
-  background: black;
-}
-
-/* SLIDER */
+/* SLIDER PRINCIPAL */
 .slider {
   position: relative;
   height: 300px;
@@ -121,7 +118,6 @@ section {
   box-shadow: 0 3px 10px rgba(0,0,0,0.1);
 }
 
-/* TITRES */
 h2 {
   color: #003366;
   margin-bottom: 15px;
@@ -141,7 +137,7 @@ h2 {
   text-align: center;
 }
 
-/* BOUTON */
+/* BUTTON */
 .btn {
   display: inline-block;
   margin-top: 15px;
@@ -150,10 +146,62 @@ h2 {
   color: white;
   border-radius: 5px;
   text-decoration: none;
+  transition: 0.3s;
 }
 
 .btn:hover {
   background: #0059b3;
+}
+
+/* ========================= */
+/* ACTUALITÉS SLIDER */
+/* ========================= */
+
+.news-slider {
+  position: relative;
+  height: 300px;
+  overflow: hidden;
+  border-radius: 10px;
+}
+
+.news-slide {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  transition: opacity 1s ease-in-out;
+}
+
+.news-slide img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.news-slide.active {
+  opacity: 1;
+}
+
+.caption {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  background: rgba(0,0,0,0.6);
+  color: white;
+  padding: 10px;
+  font-size: 15px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.caption a {
+  background: #003366;
+  color: white;
+  padding: 5px 10px;
+  border-radius: 5px;
+  text-decoration: none;
+  font-size: 12px;
 }
 
 /* FOOTER */
@@ -174,10 +222,6 @@ footer {
   .slider {
     height: 200px;
   }
-
-  .marquee h1 {
-    font-size: 16px;
-  }
 }
 
 </style>
@@ -193,22 +237,33 @@ footer {
 </header>
 
 <nav>
-  <a href="contact.html">MENU</a>
+  <a href="contact.html">
+    <img src="museba.png" alt="Menu" class="menu-icon">
+  </a>
 </nav>
 
-<!-- SLIDER -->
+<!-- SLIDER PRINCIPAL -->
 <div class="slider">
   <img src="image2.jpg" class="slide active">
-  <img src="image3.jpg" class="slide">
+<img src="image3.jpg" class="slide">
   <img src="imagine7.jpg" class="slide">
   <img src="image8.jpg" class="slide">
   <img src="image4.jpg" class="slide">
 </div>
 
-<!-- PRESENTATION -->
+
+<!-- À PROPOS -->
 <section>
-  <h2>Notre Mission</h2>
-  <p>Former des professionnels de santé compétents pour la RDC.</p>
+  <h2>🏛️ À propos de nous</h2>
+  <p>
+    L’Institut Supérieur des Techniques Médicales M’SIRI 1er (ISTM M’SIRI) est un établissement d’enseignement supérieur spécialisé dans la formation des professionnels de la santé en République Démocratique du Congo.
+  </p>
+
+  <p>
+    Nous formons des étudiants capables de répondre aux besoins médicaux avec discipline et excellence.
+  </p>
+
+  <a href="voir plus.html" class="btn">Voir plus</a>
 </section>
 
 <!-- FILIERES -->
@@ -224,7 +279,7 @@ footer {
 
 <!-- AVANTAGES -->
 <section>
-  <h2>Pourquoi choisir ISTM M'SIRI ?</h2>
+  <h2>Pourquoi choisir ISTM M'SIRI 1er?</h2>
 
   <div class="features">
     <div class="feature-box">🎓 Formation de qualité</div>
@@ -233,12 +288,51 @@ footer {
   </div>
 </section>
 
+<!-- ACTUALITÉS -->
+<section>
+  <h2>📢 Actualités</h2>
+
+  <div class="news-slider">
+
+    <div class="news-slide active">
+      <img src="image2.jpg">
+      <div class="caption">
+        🎓 Inscriptions ouvertes
+        <a href="article1.html">Voir plus</a>
+      </div>
+    </div>
+
+    <div class="news-slide">
+            <img src="recteurs.jpg">
+      <div class="caption">
+        Nomination du nouveau Recteur de l’Université Technologique M’SIRI 1er : le P.O. Jemy Kalenga.
+        <a href="article2.html">Voir plus</a>
+      </div>
+    </div>
+        <div class="news-slide">
+            <img src="recteur3.jpg">
+      <div class="caption">
+      </div>
+    </div>
+
+    <div class="news-slide">
+      <img src="image8.jpg">
+      <div class="caption">
+        📚 Conférence scientifique
+        <a href="article3.html">Voir plus</a>
+      </div>
+    </div>
+
+  </div>
+</section>
+
 <!-- FOOTER -->
 <footer>
-  <p>R.D CONGO / LUALABA / BUNKEYA</p>
-  <p>Av. Mont NKULU</p>
+  <p>R.D CONGO~LUALABA~BAYEKE</p>
+  <p>BUNKEYA AV.MONT NKULU</p>
 </footer>
 
+<!-- SLIDER PRINCIPAL -->
 <script>
 let slides = document.querySelectorAll('.slide');
 let index = 0;
@@ -247,6 +341,18 @@ setInterval(() => {
   slides[index].classList.remove('active');
   index = (index + 1) % slides.length;
   slides[index].classList.add('active');
+}, 4000);
+</script>
+
+<!-- ACTUALITÉS SLIDER -->
+<script>
+let newsSlides = document.querySelectorAll('.news-slide');
+let newsIndex = 0;
+
+setInterval(() => {
+  newsSlides.forEach(s => s.classList.remove('active'));
+  newsIndex = (newsIndex + 1) % newsSlides.length;
+  newsSlides[newsIndex].classList.add('active');
 }, 4000);
 </script>
 
